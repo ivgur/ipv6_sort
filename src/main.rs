@@ -3,17 +3,11 @@ use std::env;
 use std::fs;
 use std::net::Ipv6Addr;
 use std::collections::BinaryHeap;
-
+//Return sorted ipv6 addresses as source use file
+//temporary util get two args, then will be added proper process of second argument 
 fn main() {
-let mut sort_heap = BinaryHeap::new();
-//\\                };
-//\\let ipv6_in_u128 = u128::from_be_bytes(ipv6_addr.octets());
-//\\heap.push(ipv6_in_u128);
-//\\   println!("iCHECK{:?}", Ipv6Addr::from(ipv6_in_u128));
-//\\}
-//\\}
+	let mut sort_heap = BinaryHeap::new();
 
-//\\fn main() {
 	let args: Vec<String> = env::args().collect();
 	let input_file = &args[1];
 	let output_file = &args[2];
@@ -32,6 +26,5 @@ let mut sort_heap = BinaryHeap::new();
    let sort_vec = sort_heap.into_sorted_vec();
    for num in sort_vec {
        println!("{:?}", Ipv6Addr::from(num));
-//	   let addr = Ipv6Addr::from(num);
 	   }
 }
