@@ -16,5 +16,5 @@ add default behavior: read stdin, write to stdout
 add verbose
 
 USAGE:
-    ipv6_sort --input <<INPUT FILE>> --output <<OUTPUT FILE>>
+    ipv6_sort --input INPUT FILE --output OUTPUT FILE
 
