@@ -4,6 +4,7 @@ use std::fs;
 use std::net::Ipv6Addr;
 use std::collections::BinaryHeap;
 use std::fs::File;
+use std::fs::OpenOptions;
 use std::path::Path;
 use std::error::Error;
 use std::io::Write;
@@ -39,6 +40,15 @@ let config = Config {
 	let contents = fs::read_to_string(config.input_file)
 	           .expect("Something went wrong reading the file");
 
+			let path = Path::new(&config.output_file);
+			let display = &path.display();
+
+	let mut file = match File::create(&config.output_file) {
+        Err(why) => panic!("couldn't create {}: {}", &display, why.description()),
+        Ok(file) => file,
+
+};
+
 
 for line in contents.lines() {
 
@@ -57,17 +67,11 @@ let ipv6_addr: Ipv6Addr = match line.trim().parse(){
 },
 
 _ => {for num in sort_vec {
-			let path = Path::new(&config.output_file);
-			let display = &path.display();
 
-    // Open a file in write-only mode, returns `io::Result<File>`
-    let mut file = match File::create(&config.output_file) {
-        Err(why) => panic!("couldn't create {}: {}", &display, why.description()),
-        Ok(file) => file,
-
-};
-
-    match file.write_all(Ipv6Addr::from(num).to_string().as_bytes()) {
+//	 let mut file = OpenOptions::new().append(true).open(&config.output_file).unwrap();
+let mut string_to_write = Ipv6Addr::from(num).to_string();
+string_to_write.push_str("\n");
+    match file.write_all(string_to_write.as_bytes()) {
         Err(why) => panic!("couldn't write to {}: {}", &display, why.description()),
         Ok(_) => println!("successfully wrote to {}", &display),
 
