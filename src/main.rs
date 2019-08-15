@@ -1,3 +1,4 @@
+extern crate clap;
 use std::env;
 use std::fs;
 use std::net::Ipv6Addr;
@@ -6,16 +7,11 @@ use std::fs::File;
 use std::path::Path;
 use std::error::Error;
 use std::io::Write;
+use clap::{Arg, App, SubCommand};
+
 //Return sorted ipv6 addresses as source use file
 //temporary util get two args, then will be added proper process of second argument 
 
-fn help() {
-println!("usage:
-	ipv6_sort input_file output_file
-description: utility sort input file of ipv6 addresses and return result in stdout or output file
-    ");
-
-}
 
 struct Config {
     input_file: String,
