@@ -1,7 +1,7 @@
 [package]
 name = "ipv6_sort"
-version = "0.1.0"
-authors = ["ivan"]
+version = "0.1.1"
+authors = ["Ivan Hurzhiy"]
 edition = "2018"
 
 [dependencies]

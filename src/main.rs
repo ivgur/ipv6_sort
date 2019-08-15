@@ -7,7 +7,7 @@ use std::fs::File;
 use std::path::Path;
 use std::error::Error;
 use std::io::Write;
-use clap::{Arg, App, SubCommand};
+use clap::{Arg, App, ArgMatches};
 
 //Return sorted ipv6 addresses as source use file
 //temporary util get two args, then will be added proper process of second argument 
@@ -18,17 +18,22 @@ struct Config {
     output_file: String,
 }
 
-fn parse_config(args: &[String]) -> Config {
-    let input_file = args[1].clone();
-    let output_file = args[2].clone();
-
-    Config {input_file, output_file}
-}
+//fn parse_config(args: &[String]) -> Config {
+//    let input_file = args[1].clone();
+//    let output_file = args[2].clone();
+//
+//    Config {input_file, output_file}
+//}
 
 
 fn main() {
-	let args: Vec<String> = env::args().collect();
-	let config = parse_config(&args);
+  let arguments = parse_arguments();
+//	let args: Vec<String> = env::args().collect();
+//	let config = parse_config(&args);
+let config = Config {
+                      input_file: arguments.value_of("input").unwrap().to_string(),
+											output_file: arguments.value_of("output").unwrap().to_string()
+										};
 
 	let mut sort_heap = BinaryHeap::new();
 	let contents = fs::read_to_string(config.input_file)
@@ -70,4 +75,24 @@ _ => {for num in sort_vec {
 	   }},
 
 }
+}
+
+fn parse_arguments() -> ArgMatches<'static> {
+    App::new("ipv6_sort")
+        .version(env!("CARGO_PKG_VERSION"))
+        .author(env!("CARGO_PKG_AUTHORS"))
+        .about("sort ipv6 addresses, not support ipv6 addresses with mask")
+				.arg(Arg::with_name("input")
+             .short("i")
+             .long("input")
+						 .required(true)
+             .value_name("INPUT FILE")
+						)
+				.arg(Arg::with_name("output")
+             .short("o")
+             .long("output")
+						 .required(true)
+             .value_name("OUTPUT FILE")
+						)
+        .get_matches()
 }
